@@ -1,0 +1,1 @@
+SELECT sum(total_nationality), CoA FROM `arrivals` where year=2015 group by CoA
