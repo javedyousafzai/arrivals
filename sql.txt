@@ -1,1 +1,3 @@
 SELECT sum(total_nationality), CoA FROM `arrivals` where year=2015 group by CoA
+
+SELECT sum(total_nationality), month FROM `arrivals` where CoA='Greece' AND year = 2017 group by month order by month_no
