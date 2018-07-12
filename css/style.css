@@ -80,7 +80,7 @@ a, a:hover, a:focus, a:active{
 }
 
 .section-padding{
-	padding: 60px 0px;
+	padding: 20px 0px;
 
 }
 h2 {
@@ -93,10 +93,10 @@ h2 {
 hr.botm-line {
     height: 1px;
     width: 1020px;
-    background: #00b36e;
+    background: #ccc;
     position: relative;
     border: 0;
-    margin: 20px 0 20px 0;
+    margin: 10px 0 10px 0;
 }
 
 /***************************************
