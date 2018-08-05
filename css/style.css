@@ -99,6 +99,34 @@ hr.botm-line {
     margin: 10px 0 10px 0;
 }
 
+/* added by Javed for table properties*/
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+
+.cellColor 
+{  
+    background: #F7F1EF; 
+}
+
+.cellHeader 
+{  
+    background: #E8F3FC; 
+}
+
+.cellTotal 
+{  
+    background: #F0F3F7; 
+    font-size: 12px;
+    font-weight: 900;
+}
+
 /***************************************
 banner
 ***************************************/

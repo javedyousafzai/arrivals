@@ -46,11 +46,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4 col-sm-4">
-				<p class="h52">Arrival Overview</p>
-			
-        </div>
-
-
+			<p class="h52">Arrival Overview</p>
+		</div>
         <div class="col-md-4 col-sm-4">
 
 
@@ -66,7 +63,7 @@
           </div>
           <div class="service-info">
             <div class="icon">
-
+                <p class="h52">&nbsp;</p>
             </div>
             <div class="icon-info">
 
@@ -78,15 +75,12 @@
         <div class="col-md-4 col-sm-4">
           <div class="service-info">
             <div class="icon">
-
-				<p class="h52">Comparison</p>
+				    <p class="h52">Comparison</p>
 
 
             </div>
             <div class="icon-info">
-
-
-            </div>
+           </div>
           </div>
           <div class="service-info">
             <div class="icon">
@@ -102,68 +96,94 @@
 
     <div class="container">
 	    <div class="row">
-	        <div class="col-md-4 col-sm-4">
-				<hr class="botm-line">
-			</div>
-		</div>
+	        
+		
 
 		<?php
 			
-			// Get the country names in country array
-			$country = array();
+			// Set the country, year and months lists in array;
+			$country = array('Cyprus','Greece', 'Italy','Spain');
+      $year = array(2013,2014,2015,2016,2017,2018);
+      $month_value = '';
+      $country_flag = '';
+      $total_year_arrivals =0;
+
+      $db = mysqli_connect('10.9.143.95','root', '','europe_rm')
+      or die('Error connecting to MySQL server.');
+
+       echo "<table border=1 width=100%>
+              <tr>
+              <td>Country</td>
+              <td>Year</td>
+              <td class='cellHeader' align='center'><strong>Jan</strong></td>
+              <td class='cellHeader' align='center'><strong>Feb</strong></td>
+              <td class='cellHeader' align='center'><strong>Mar</strong></td>
+              <td class='cellHeader' align='center'><strong>Apr</strong></td>
+              <td class='cellHeader' align='center'><strong>May</strong></td>
+              <td class='cellHeader' align='center'><strong>Jun</strong></td>
+              <td class='cellHeader' align='center'><strong>Jul</strong></td>
+              <td class='cellHeader' align='center'><strong>Aug</strong></td>
+              <td class='cellHeader' align='center'><strong>Sep</strong></td>
+              <td class='cellHeader' align='center'><strong>Oct</strong></td>
+              <td class='cellHeader' align='center'><strong>Nov</strong></td>
+              <td class='cellHeader' align='center'><strong>Dec</strong></td>
+              <td class='cellHeader' align='center'><strong>TOTAL</strong></td>
+            </tr>";
+            
+        /* set color the cells to show arrival data per countr in blocks for easy reading */                 
+        $color1 ='#F3F3F3'; 
 
 
-			/*	CONNECT TO DATABASE*/
-      /*
-			 $db = mysqli_connect('127.0.0.1','root', '','europe_rm')
-			 or die('Error connecting to MySQL server.');
+        for ($i=0; $i<count($country); $i++ )
+        {
+           
+            for($j=0; $j<count($year); $j++ )                        
+            {
+              echo "<tr>";    
+                //echo "<tr>";
+                if ($country_flag != $country[$i])
+                    echo "<tr><td><strong>$country[$i]</strong></td>
+                            <td rowspan=13></td>
+                            </tr>";
+                          
 
-			//Get the list of countruies of Arrivals
-			$query = "SELECT distinct coA FROM `arrivals`";
-			mysqli_query($db, $query) or die('Error querying database.');
-
-			$result = mysqli_query($db, $query);
-			$row = mysqli_fetch_array($result);
-
-			
-			while ($row = mysqli_fetch_array($result)) {
-			//echo $row['CoA']."</br>";
-			$country[]=$row[0];
-			*/
-			
-      $month= array ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
-      
-       $db = mysqli_connect('127.0.0.1','root', '','europe_rm')
-       or die('Error connecting to MySQL server.');
-
-              
-        for ($i=0; $i <=count($month); $i++) 
-          {
-
+                else
+                    
+                    echo "<tr><td class='cellColor'>$year[$j]</td>";
              
-              //Get arrival data for all the countries for all years - group by month
-            $query = "SELECT year, CoA, sum(total_nationality) FROM `arrivals` where month = '".$month[$i]."' group by year, coa order by year, coa";
+                for ($k=1; $k<=12; $k++) 
+                {  
+                    $query = "SELECT sum(total_nationality) as arrived FROM `arrivals` where month_no=$k and CoA='$country[$i]' and year = $year[$j]";
+                    //echo $query."<br/>";
+                    mysqli_query($db, $query) or die('Error querying database.');       
 
-            mysqli_query($db, $sql) or die('Error querying database.');       
+                    $result = mysqli_query($db, $query);
+                    while ($row = mysqli_fetch_array($result)) 
+                    {
 
-            $result = mysqli_query($db, $sql);
-            $row = mysqli_fetch_array($result);
-            echo '<table><tr>';
-            while ($row = mysqli_fetch_array($result)) 
-                {
-                    echo '<tr><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td><td>'.$row[3].'</td></tr>';
+                        if ( is_null($row[0]) OR $row[0] == '')
+                            $month_value = '-';
+                        else
+                            {
+                            $month_value = $row[0];
+                            $total_year_arrivals = $total_year_arrivals + $row[0];
+                            }
+
+
+                        echo '<td>'.$month_value.'</td>';
+                        
+                    }
                 }
-           }
+                echo "<td class='cellTotal'>$total_year_arrivals</td></tr>";
+                $country_flag = $country[$i];
+                $total_year_arrivals=0;
+            }   
+        }
+          
            			
       echo '</table>';
-      print_r($year);
-			/* get the difference of the tow numbers*/
-
-
-
+      /* get the difference of the tow numbers*/
 			$val = round(getDifference (30000, 10000),1).'%';
-
-
 			/* Function to calculate the difference between the two figures*/	
 			function getDifference($oldValue, $newValue)
 			{
@@ -174,14 +194,13 @@
 
 		?>
 
-
+    </div>
 
 		<div class="icon-info">
-      <p> end of results</p>
+        <p> end of results</p>    
 		</div>
-
 	</div>
-	
+
   </section>
 
 
