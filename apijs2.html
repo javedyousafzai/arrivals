@@ -8,239 +8,184 @@
 APIs for Med countries
 Malta Monthly arrivals
 https://data2.unhcr.org/population/get/timeseries?widget_id=136492&sv_id=11&geo_id=690&population_group=4797&frequency=month&fromDate=2015-01-01
+
+Dead and Missing on the three Med routes
+https://data.unhcr.org/population/?widget_id=515214&sv_id=11&population_group=4801
+
+Mediterranean dead/missing (annual) - 0;4801
+Eastern Med 5274
+Central Med 5275
+Western Med 5276
+
+
 -->
-    <h1>Mix Arrivals in Southern Europe- Data calculations</h1>
- 
-      <!-- All Med arrivals-->
-      <div id="med_data" style="font-size: 22px;"> </div>
- 
-      <!-- All Med Sea arrivals-->
-      <div id="med_sea_data" style="font-size: 22px;"> </div>
+      <div style="padding-left: 30px;">
+          <h1>Mix Arrivals in Southern Europe- Data calculations</h1>
+       
+            <!-- All Med Sea+ Land arrivals-->
+            <div id="med_data" style="font-size: 22px;"> </div>
+             <!-- All Med Sea arrivals-->
+            <div id="med_sea_data" style="font-size: 22px;"> </div>
+            <!-- All Med Land  arrivals-->
+            <div id="med_land_data" style="font-size: 22px;"> </div>
+            <p></p>
+            <div id="dm_med_data" style="color:#E55451; font-size: 22px;"> </div>
+            <p>--------------------------------------------------</p>
 
-      <!-- All MedLand  Sea arrivals-->
-      <div id="med_land_data" style="font-size: 22px;"> </div>
+            <p></p>
+            
+             <div style="background: #e6f5ff; width: 500px;">     
+                  <h2>Mix Arrivals in Greece</h2>
+                  <div id="grc_med_data" style="font-size: 22px;"> </div>
+                  <div id="grc_med_sea_data" style="font-size: 22px;"> </div>
+                  <div id="grc_med_land_data" style="font-size: 22px;"> </div>
+                  <p>--------------------------------------------------</p>
 
-      <p></p><br>
-      <h2>Mix Arrivals in Greece</h2>
-      <div id="grc_med_data" style="font-size: 22px;"> </div>
-      <div id="grc_med_land_data" style="font-size: 22px;"> </div>
+                  <p></p>
+                  <h2>Mix Arrivals in Cyprus</h2>
+                  <div id="cyp_med_data" style="font-size: 22px;"> </div>
+                  <div id="cyp_med_sea_data" style="font-size: 22px;"> </div>
+                  <div id="cyp_med_land_data" style="font-size: 22px;"> </div>
+                  <p></p>
+                  <!-- Show Dead and Missing figures for Eastern Med route  -->
+                  <div id="dm_east_med" style="color:#E55451; font-size: 22px;"> </div>
+               </div>
+            <p>--------------------------------------------------</p>
+
+            <p></p>
+            <div style="background: #ecf9ec; width: 500px;">
+                  <h2>Mix Arrivals in Italy</h2>
+                  <div id="ita_med_data" style="font-size: 22px;"> </div>
+                  <p>--------------------------------------------------</p>
+                  <!-- Malta sea Med arrivals-->
+                  <p></p>
+                  <h2>Mix Arrivals by Sea in Malta</h2>
+                  <div id="malta_med_data" style="font-size: 22px;"> </div>
+
+                  <p></p><br>
+                  <!-- Show Dead and Missing figures for Central Med route  -->
+                  <div id="dm_cent_med" style="color:#E55451; font-size: 22px;"> </div>
+            </div>
+            <p>--------------------------------------------------</p>
 
 
-      <p></p><br>
-      <h2>Mix Arrivals in Italy</h2>
-      <div id="ita_med_data" style="font-size: 22px;"> </div>
+            <p></p>
+       
+            <div style="background: #b3d9ff; width: 500px;">
+            
+                  <h2>Mix Arrivals in Spain</h2>
+                  <div id="spa_med_data" style="font-size: 22px;"> </div>
+                  <div id="spa_med_sea_data" style="font-size: 22px;"> </div>
+                  <div id="spa_med_land_data" style="font-size: 22px;"> </div>
 
-      <p></p><br>
-      <h2>Mix Arrivals in Spain</h2>
-      <div id="spa_med_data" style="font-size: 22px;"> </div>
-      <div id="spa_med_sea_data" style="font-size: 22px;"> </div>
-      <div id="spa_med_land_data" style="font-size: 22px;"> </div>
+                  <p></p><br>
+                  <!-- Show Dead and Missing figures for Central Med route  -->
+                  <div id="dm_west_med" style="color:#E55451; font-size: 22px;"> </div>
+            </div>
+
+            <p>--------------------------------------------------</p>
+            
+     </div>  
 
    <script>
-         
-         /* Display the main Med arrival figures, both Land and Sea arrivals over Mediterranean */
-         const url1 = 'https://data.unhcr.org/population/?widget_id=515211&sv_id=11&population_group=4797,4798&year=latest';
-         fetch(url1)
-            .then((resp1) => resp1.json())
-            .then(function(data2) 
-            {
-               let arrivalData1 = data2.data;
-               return arrivalData1.map(
-                  function(addData1) 
-                     {
-                        document.getElementById('med_data').innerHTML = `${addData1.population_groups_concat} : ${addData1.individuals} <br><span style='font-size:14px'> </span>Last updated: ${addData1.date}`;
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
-         {
-            console.log(error);
-         }
-      )
 
-
+      /* Display the main Med arrival figures, both Land and Sea arrivals over Mediterranean */
+      show_med_data("med_data", "https://data.unhcr.org/population/?widget_id=515211&sv_id=11&population_group=4797,4798&year=latest");    
       /* Display the Med Sea arrival figures */
-         const url2 = 'https://data.unhcr.org/population/?widget_id=515212&sv_id=11&population_group=4797&year=latest';
-         fetch(url2)
-            .then((resp2) => resp2.json())
-            .then(function(data3) 
-            {
-               let arrivalData1 = data3.data;
-               return arrivalData1.map(
-                  function(addData2) 
-                     {
-                        document.getElementById('med_sea_data').innerHTML = `${addData2.population_groups_concat} : ${addData2.individuals} `;
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
-         {
-            console.log(error);
-         }
-      )
-
-
+      show_med_data("med_sea_data", "https://data.unhcr.org/population/?widget_id=515212&sv_id=11&population_group=4797&year=latest");
       /* Display the Med arrivals on Land */
-         const url3 = 'https://data.unhcr.org/population/?widget_id=515213&sv_id=11&population_group=4798&year=latest';
-         fetch(url3)
-            .then((resp3) => resp3.json())
-            .then(function(data4) 
-            {
-               let arrivalData1 = data4.data;
-               return arrivalData1.map(
-                  function(addData3) 
-                     {
-                        document.getElementById('med_land_data').innerHTML = `${addData3.population_groups_concat} : ${addData3.individuals} `;
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
+      show_med_data("med_land_data", "https://data.unhcr.org/population/?widget_id=515213&sv_id=11&population_group=4798&year=latest");
+      /* Dead and Missign On all three Med routes */               
+      dead_missing("dm_med_data", "https://data.unhcr.org/population/?widget_id=515214&sv_id=11&population_group=4801");
+
+      /********************************** Eastern Med Route *******************************/
+      /* Greece */
+
+      /* Display the Med Sea and Land arrivals to Greece */
+      show_med_data("grc_med_data", "https://data.unhcr.org/population/?widget_id=516301&geo_id=640&sv_id=11&population_group=4797,4798&year=latest");      
+      /* Display the Med Sea arrivals to Greece */
+      show_med_data("grc_med_sea_data", "https://data.unhcr.org/population/?widget_id=515114&geo_id=640&sv_id=11&population_group=4797&year=latest");
+      /* Display the Med Land arrivals to Greece */
+      show_med_data("grc_med_land_data", "https://data.unhcr.org/population/?widget_id=515114&geo_id=640&sv_id=11&population_group=4798&year=latest");
+      /* Dead and Missign On Eastern Med Route */               
+         dead_missing("dm_east_med", "https://data.unhcr.org/population/?widget_id=515214&sv_id=11&population_group=5274")  ;
+
+      /* Display the Cyprus Med  arrivals  */
+      show_med_data("cyp_med_data", "https://data.unhcr.org/population/?sv_id=11&geo_id=616&population_group=4797,4798&year=latest");
+      /* Display the Cyprus Med  Sea arrivals  */
+      show_med_data("cyp_med_sea_data","https://data.unhcr.org/population/?sv_id=11&geo_id=616&population_group=4797&year=latest");
+      /* Display the Cyprus Med Land arrivals  */
+      show_med_data("cyp_med_land_data","https://data.unhcr.org/population/?sv_id=11&geo_id=616&population_group=4798&year=latest");
+
+      /**************************** Central Med Route **********************************************/
+      /* Italy */
+      show_med_data("ita_med_data", "https://data.unhcr.org/population/?widget_id=512413&geo_id=656&sv_id=11&population_group=4797&year=latest");
+      /* Malta */
+      
+      /* Display the Malta Med Sea arrivals  */
+      show_med_data("malta_med_data","https://data.unhcr.org/population/?widget_id=136492&sv_id=11&geo_id=690&population_group=4797&&year=latest");
+      
+      /* Dead and Missign On Central Med Route */               
+      dead_missing("dm_cent_med", "https://data.unhcr.org/population/?widget_id=515214&sv_id=11&population_group=5275")  ;
+      
+      /********************************** Western Med Route *******************************/
+      /* Spain */
+      show_med_data("spa_med_data", "https://data.unhcr.org/population/?widget_id=516027&geo_id=729&sv_id=11&population_group=4797,4798&year=latest");
+      /* Display Sea arrivals on Western med route - Spain  */
+      show_med_data("spa_med_sea_data", "https://data.unhcr.org/population/?widget_id=516028&geo_id=729&sv_id=11&population_collection=38&year=latest");
+      /* Display land arrivals on Western med route - Spain  */
+      show_med_data("spa_med_land_data", "https://data.unhcr.org/population/?widget_id=516029&geo_id=729&sv_id=11&population_group=4798&year=latest");
+      /* Dead and Missign On Western Med Route */               
+      dead_missing("dm_west_med", "https://data.unhcr.org/population/?widget_id=515214&sv_id=11&population_group=5276")  ;
+
+
+      function dead_missing (document_id, url)
          {
-            console.log(error);
-         }
-      )
-
-   /* Display the Med arrivals to Greece */
-         const url_grc = 'https://data.unhcr.org/population/?widget_id=515112&geo_id=640&sv_id=11&population_group=4797,4798&year=latest';
-         fetch(url_grc)
-            .then((resp_grc) => resp_grc.json())
-            .then(function(data_grc) 
-            {
-               let arrivalData_grc = data_grc.data;
-               return arrivalData_grc.map(
-                  function(addData_grc) 
+            const url_dm = url;
+                  fetch(url_dm)
+                     .then((resp_data) => resp_data.json())
+                     .then(function(get_data) 
                      {
-                        document.getElementById('grc_med_data').innerHTML = `${addData_grc.population_groups_concat} : ${addData_grc.individuals} `;
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
-         {
-            console.log(error);
-         }
-      )
+                        let map_date = get_data.data;
+                        return map_date.map(
+                           function(out_data) 
+                              {
+                                 return document.getElementById(document_id).innerHTML = `${out_data.population_groups_concat} : ${out_data.individuals}`;
+                              }
+                           )
+                  })
+                     
+                  .catch(function(error) 
+                  {
+                     console.log(error);
+                  }
+               )
+          }
 
-   /* Display the Med arrivals - Land - to Greece */
-         const url_grc_land = 'https://data.unhcr.org/population/?widget_id=515114&geo_id=640&sv_id=11&population_group=4798&year=latest';
-         fetch(url_grc_land)
-            .then((resp_grc_land) => resp_grc_land.json())
-            .then(function(data_grc_land) 
-            {
-               let arrivalData_grc_land = data_grc_land.data;
-               return arrivalData_grc_land.map(
-                  function(addData_grc_land) 
+         
+
+         function show_med_data (document_id, url)
+         {
+            const arr_url_data = url;
+                  fetch(arr_url_data)
+                     .then((resp_arr_data) => resp_arr_data.json())
+                     .then(function(get_arr_data) 
                      {
-                        document.getElementById('grc_med_land_data').innerHTML = `${addData_grc_land.population_groups_concat} : ${addData_grc_land.individuals} `;
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
-         {
-            console.log(error);
+                        let map_arr_date = get_arr_data.data;
+                        return map_arr_date.map(
+                           function(out_arr_data) 
+                              {
+                                 return document.getElementById(document_id).innerHTML = `${out_arr_data.population_groups_concat} : ${out_arr_data.individuals}`;
+                              }
+                           )
+                  })
+                 .catch(function(error) 
+                  {
+                     console.log(error);
+                  }
+               )
          }
-      )
 
-        /* Display the Med arrivals - Sea arrivals in Italy */
-         const url_ita_sea = 'https://data.unhcr.org/population/?widget_id=512413&geo_id=656&sv_id=11&population_group=4797&year=latest';
-         fetch(url_ita_sea)
-            .then((resp_ita_sea) => resp_ita_sea.json())
-            .then(function(data_ita_sea) 
-            {
-               let arrivalData_ita_sea = data_ita_sea.data;
-               return arrivalData_ita_sea.map(
-                  function(addData_ita_sea) 
-                     {
-                        document.getElementById('ita_med_data').innerHTML = `${addData_ita_sea.population_groups_concat} : ${addData_ita_sea.individuals} `;
-                        //alert toLocaleString("2343434");
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
-         {
-            console.log(error);
-         }
-      )
-
-
-
-
-  /* Display the Med arrivals in Spain, both land and Sea */
-         const url_spa = 'https://data.unhcr.org/population/?widget_id=516027&geo_id=729&sv_id=11&population_group=4797,4798&year=latest';
-         fetch(url_spa)
-            .then((resp_spa) => resp_spa.json())
-            .then(function(data_spa) 
-            {
-               let arrivalData_spa = data_spa.data;
-               return arrivalData_spa.map(
-                  function(addData_spa) 
-                     {
-                        document.getElementById('spa_med_data').innerHTML = `${addData_spa.population_groups_concat} : ${addData_spa.individuals} `;
-                        //alert toLocaleString("2343434");
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
-         {
-            console.log(error);
-         }
-      )
-
-   /* Display the Med arrivals in Spain, Land arrivals */
-         const url_spa_sea = 'https://data.unhcr.org/population/?widget_id=516028&geo_id=729&sv_id=11&population_collection=38&year=latest';
-         fetch(url_spa_sea)
-            .then((resp_spa_sea) => resp_spa_sea.json())
-            .then(function(data_spa_sea) 
-            {
-               let arrivalData_spa_sea = data_spa_sea.data;
-               return arrivalData_spa_sea.map(
-                  function(addData_spa_sea) 
-                     {
-                        document.getElementById('spa_med_sea_data').innerHTML = `${addData_spa_sea.population_groups_concat} : ${addData_spa_sea.individuals} `;
-                        //alert toLocaleString("2343434");
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
-         {
-            console.log(error);
-         }
-      )
-
-   /* Display the Med arrivals in Spain, Land arrivals */
-         const url_spa_land = 'https://data.unhcr.org/population/?widget_id=516029&geo_id=729&sv_id=11&population_group=4798&year=latest';
-         fetch(url_spa_land)
-            .then((resp_spa_land) => resp_spa_land.json())
-            .then(function(data_spa_land) 
-            {
-               let arrivalData_spa_land = data_spa_land.data;
-               return arrivalData_spa_land.map(
-                  function(addData_spa_land) 
-                     {
-                        document.getElementById('spa_med_land_data').innerHTML = `${addData_spa_land.population_groups_concat} : ${addData_spa_land.individuals} `;
-                        //alert toLocaleString("2343434");
-                     }
-                  )
-         })
-            
-         .catch(function(error) 
-         {
-            console.log(error);
-         }
-      )
-
-
-
-
-
-
-   </script>
+         </script>
 </body>
 </html>
